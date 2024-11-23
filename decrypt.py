@@ -30,40 +30,40 @@ def generate_key():
     except:
         return None
 
-def decrypt_instructions(encrypted_file='encrypted/INSTRUCTIONS.enc'):
-    """Decrypt the instructions and write them to markdown files"""
-    try:
-        key = generate_key()
-        if not key:
-            print("Error: This script must be run in a git repository after forking")
-            return None
+# def decrypt_instructions(encrypted_file='encrypted/INSTRUCTIONS.enc'):
+#     """Decrypt the instructions and write them to markdown files"""
+#     try:
+#         key = generate_key()
+#         if not key:
+#             print("Error: This script must be run in a git repository after forking")
+#             return None
             
-        with open(encrypted_file, 'r') as f:
-            encrypted_data = base64.b64decode(f.read())
+#         with open(encrypted_file, 'r') as f:
+#             encrypted_data = base64.b64decode(f.read())
             
-        cipher_suite = Fernet(key)
-        decrypted_data = cipher_suite.decrypt(encrypted_data)
-        instructions = json.loads(decrypted_data)
+#         cipher_suite = Fernet(key)
+#         decrypted_data = cipher_suite.decrypt(encrypted_data)
+#         instructions = json.loads(decrypted_data)
         
-        # Write detailed instructions to markdown files
-        for filename, content in instructions.items():
-            with open(filename, 'w') as f:
-                f.write(content)
+#         # Write detailed instructions to markdown files
+#         for filename, content in instructions.items():
+#             with open(filename, 'w') as f:
+#                 f.write(content)
                 
-        print("\n✨ Instructions decrypted successfully!")
-        print("\nCreated the following files:")
-        for filename in instructions.keys():
-            print(f"- {filename}")
+#         print("\n✨ Instructions decrypted successfully!")
+#         print("\nCreated the following files:")
+#         for filename in instructions.keys():
+#             print(f"- {filename}")
             
-    except FileNotFoundError:
-        print(f"Error: Could not find {encrypted_file}")
-    except Exception as e:
-        print(f"Error decrypting instructions: {str(e)}")
+#     except FileNotFoundError:
+#         print(f"Error: Could not find {encrypted_file}")
+#     except Exception as e:
+#         print(f"Error decrypting instructions: {str(e)}")
 
 def encrypt_instructions():
     """Utility function to encrypt the initial instructions"""
     try:
-        initial_commit_hash = "initial_commit_hash_here"  # Replace with actual initial commit hash
+        initial_commit_hash = "aa09e60337f6eb7a36791ed40720d0edc1a56f36"
         key = base64.b64encode(initial_commit_hash.encode()[:32].ljust(32, b'0'))
         
         instructions = {
@@ -206,4 +206,8 @@ To get your fork time:
         print(f"Error encrypting instructions: {str(e)}")
 
 if __name__ == "__main__":
-    decrypt_instructions()
+    # Comment out the decryption function
+    # decrypt_instructions()
+    
+    # Uncomment the encryption function
+    encrypt_instructions()
